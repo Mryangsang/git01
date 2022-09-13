@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxxx.Dao.AccountDao">
+    <resultMap id="BaseResultMap" type="com.xxxx.po.Account">
+          <id column="accountId" property="accountId" jdbcType="INTEGER" />
+          <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+          <result column="accountType" property="accountType" jdbcType="VARCHAR" />
+          <result column="money" property="money" jdbcType="DOUBLE" />
+          <result column="userid" property="userId" jdbcType="INTEGER" />
+          <result column="createDate" property="createDate" jdbcType="DATE" />
+          <result column="updateDate" property="updateDate" jdbcType="DATE" />
+          <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        accountId, accountName, accountType, money, userid, createDate, updateDate, remark
+    </sql>
+    <!--查询操作-->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" resultType="com.xxxx.po.Account">
+        select
+            <include refid="Base_Column_List"/>
+            from Account
+            where accountId=#{id,jdbcType=INTEGER}
+    </select>
+    <!--删除操作-->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from Account
+        where accountId=#{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--添加操作-->
+    <insert id="save" parameterType="com.xxxx.po.Account">
+        insert into Account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accountId!=null">
+                accountId,
+            </if>
+            <if test="accountName!=null">
+                accountName,
+            </if>
+            <if test="accountType!=null">
+                accountType,
+            </if>
+            <if test="money!=null">
+                money,
+            </if>
+            <if test="userid!=null">
+                userid,
+            </if>
+           <if test="createDate != null" >
+               createDate,
+           </if>
+           <if test="updateTime != null" >
+               updateDate,
+           </if>
+           <if test="remark != null" >
+           remark
+           </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+               <if test="accountId != null" >
+               #{accountId,jdbcType=INTEGER},
+               </if>
+               <if test="accountName != null" >
+               #{accountName,jdbcType=VARCHAR},
+               </if>
+               <if test="accountType != null" >
+               #{accountType,jdbcType=VARCHAR},
+               </if>
+               <if test="money != null" >
+               #{money,jdbcType=DOUBLE},
+               </if>
+               <if test="userid != null" >
+               #{userid,jdbcType=INTEGER},
+               </if>
+               <if test="createDate != null" >
+               #{createDate,jdbcType=DATE},
+               </if>
+               <if test="updateDate != null" >
+               #{updateDate,jdbcType=DATE},
+               </if>
+               <if test="remark != null" >
+               #{remark,jdbcType=VARCHAR},
+               </if>
+              </trim>
+    </insert>
+
+    <!--更新操作-->
+    <update id="update" parameterType="com.xxxx.po.Account">
+        update Account
+        <set>
+            <if test="accountName!=null" >
+                accountName=#{accountName,jdbcType=VARCHAR},
+            </if>
+               <if test="accountType!=null" >
+                   accountType=#{accountType,jdbcType=VARCHAR},
+               </if>
+               <if test="money!=null" >
+               money=#{money,jdbcType=DOUBLE},
+               </if>
+               <if test="userid!=null" >
+               userid=#{userId,jdbcType=INTEGER},
+               </if>
+               <if test="createDate!=null" >
+                   createDate=#{createDate,jdbcType=DATE},
+               </if>
+               <if test="updateDate!=null" >
+                   updateDate=#{updateDate,jdbcType=DATE},
+               </if>
+               <if test="remark!= null" >
+               remark=#{remark,jdbcType=VARCHAR},
+               </if>
+            <where>
+                accountId=#{accountId,jdbcType=INTEGER}
+            </where>
+        </set>
+    </update>
+</mapper>
